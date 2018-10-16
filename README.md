@@ -1,2 +1,2 @@
 # entangler-db
-Distributable OO-DB written entirely in JavaScript.
+（Work in progress）Distributable OO-DB written entirely in JavaScript.
