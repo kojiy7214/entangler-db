@@ -4,18 +4,34 @@
   "description": "Simple NoSql database.",
   "main": "index.js",
   "scripts": {
-    "test": "npm install ../simpleutils && mocha --recursive"
+    "test": "mocha --recursive && rm -r ./data",
+    "doc": "jsdoc2md index.js > API.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kojiy7214/entangler-db.git"
   },
   "keywords": [
     "nosql",
     "database"
   ],
-  "author": "koji72@gmail.com",
+  "author": "koji7214@gmail.com",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kojiy7214/entangler-db/issues"
+  },
+  "homepage": "https://github.com/kojiy7214/entangler-db.wiki.git",
   "devDependencies": {
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "jsclass-event": "^0.1.2",
+    "jsclass-map": "^0.1.2",
+    "jsclass-mixin": "^0.1.5",
+    "jsclass-serializer": "^0.2.0"
   },
   "dependencies": {
-    "simpleutils": "file:../simpleutils"
+    "jsclass-event": "^0.1.2",
+    "jsclass-map": "^0.1.2",
+    "jsclass-mixin": "^0.1.5",
+    "jsclass-serializer": "^0.2.0"
   }
 }
