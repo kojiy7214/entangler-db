@@ -4,7 +4,7 @@
   "description": "Simple NoSql database.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --recursive && rm -r ./data",
+    "test": "mocha --recursive",
     "doc": "jsdoc2md index.js > API.md"
   },
   "repository": {
@@ -22,11 +22,12 @@
   },
   "homepage": "https://github.com/kojiy7214/entangler-db.wiki.git",
   "devDependencies": {
-    "mocha": "^5.2.0",
     "jsclass-event": "^0.1.2",
+    "jsclass-logger": "^0.1.4",
     "jsclass-map": "^0.1.2",
     "jsclass-mixin": "^0.1.5",
-    "jsclass-serializer": "^0.2.0"
+    "jsclass-serializer": "^0.2.0",
+    "mocha": "^5.2.0"
   },
   "dependencies": {
     "jsclass-event": "^0.1.2",

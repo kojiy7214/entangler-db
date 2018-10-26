@@ -1,8 +1,8 @@
-const Serializable = require("jsclass-serializer");
-const Map = require("jsclass-map");
-const EventAware = require("jsclass-event");
-const mix = require("jsclass-mixin");
-const logger = require("jsclass-logger")();
+const Serializable = require("../jsclass-serializer");
+const Map = require("../jsclass-map");
+const EventAware = require("../jsclass-event");
+const mix = require("../jsclass-mixin");
+const logger = require("jsclass-logger")({}, "entangler-db");
 
 
 let documents = Symbol();
@@ -12,49 +12,64 @@ class Entangler extends EventAware {
     Serializable.setStoragePath(storage_path);
   }
 
-  constructor() {
+  constructor(path) {
     super();
     this[documents] = new Map();
+
+    Serializable.setStoragePath(path);
+    Serializable.loadAll(doc => this.addDoc(doc));
   }
 
-  addDocument(doc) {
+  addDoc(doc) {
     this[documents].set(doc.uuid, doc);
+    Serializable.saveToFile(doc);
   }
 
-  onStateChange(data) {
+  getDoc(uuid) {
+    return this[documents].get(uuid);
+  }
 
+  onDocChanged(doc) {
+    Serializable.saveToFile(doc, doc.uuid);
+    logger.debug("STATE CHAGE DETECTED");
+    logger.debug(doc);
   }
 }
 
 class Document extends mix(Serializable, EventAware) {
-  constructor() {
-    super();
+  constructor(uuid) {
+    super(uuid);
     EventAware.new(this);
-    entangler_db.addDocument(this);
 
     let handler = {
-      set: function(obj, prop, value) {
-        if (obj[prop] !== value) {
-          obj[prop] = value;
-          let data = {};
-          data.sender = obj;
-          data.key = prop;
-          data.val = value;
-          obj.dispatchTo(o => o.uuid && o.uuid === obj.uuid, "stateChanged", data);
-        }
-        return true;
+      set: function(doc, key, val) {
+        Reflect.set(doc, key, val);
+        doc.dispatchTo(o => o instanceof Entangler, "docChanged", doc);
+      },
+      apply: function(target, thisArg, argumentsList) {
+        logger.debug(target);
+        logger.debug(thisArg);
+        logger.debug(argumentList);
+        Reflect.apply(target, thisArg, argumentsList);
       }
-    };
+    }
 
-    return new Proxy(this, handler);
-  }
+    let obj = undefined;
 
-  onStateChanged(data) {
-    this[data.key] = data.val;
+    if (!uuid) {
+      entangler_db.addDoc(this);
+      obj = this;
+    } else {
+      obj = entangler_db.getDoc(uuid);
+      if (!obj) {
+        throw "Document Not Found(uuid=" + uuid + ")";
+      }
+    }
+    return new Proxy(new Proxy(obj, handler), {});
   }
 }
 
-var entangler_db = entangler_db || new Entangler();
+var entangler_db = entangler_db || new Entangler("./data/");
 
 module.exports.entangler_db = entangler_db;
 module.exports.Document = Document;
