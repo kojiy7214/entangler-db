@@ -31,9 +31,10 @@
   },
   "dependencies": {
     "jsclass-event": "^0.1.2",
-    "jsclass-logger": "^0.1.3",
+    "jsclass-logger": "^0.1.7",
     "jsclass-map": "^0.1.2",
     "jsclass-mixin": "^0.1.5",
-    "jsclass-serializer": "^0.2.0"
+    "jsclass-serializer": "^0.2.0",
+    "uuid": "^3.3.2"
   }
 }
