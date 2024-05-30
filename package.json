@@ -1,15 +1,18 @@
 {
   "name": "entangler-db",
   "version": "0.0.1",
-  "description": "Simple NoSql database.",
-  "main": "index.js",
+  "description": "Multi domain distributed DBMS written in JavaScript",
+  "main": "src/main.js",
+  "type": "module",
   "scripts": {
     "test": "mocha --recursive",
-    "doc": "jsdoc2md index.js > API.md"
+    "doc": "jsdoc2md index.js > API.md",
+    "build-lib": "webpack --config webpack.lib.config.js",
+    "build-server": "webpack --config webpack.server.config.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kojiy7214/entangler-db.git"
+    "url": "https://github.com/kojiy7214/entangler-db.git"
   },
   "keywords": [
     "nosql",
@@ -22,19 +25,11 @@
   },
   "homepage": "https://github.com/kojiy7214/entangler-db.wiki.git",
   "devDependencies": {
-    "jsclass-event": "^0.1.2",
-    "jsclass-logger": "^0.1.4",
-    "jsclass-map": "^0.1.2",
-    "jsclass-mixin": "^0.1.5",
-    "jsclass-serializer": "^0.2.0",
-    "mocha": "^5.2.0"
+    "mocha": "^9.1.3",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
   },
   "dependencies": {
-    "jsclass-event": "^0.1.2",
-    "jsclass-logger": "^0.1.7",
-    "jsclass-map": "^0.1.2",
-    "jsclass-mixin": "^0.1.5",
-    "jsclass-serializer": "^0.2.0",
-    "uuid": "^3.3.2"
+    "express": "^4.19.2"
   }
 }
