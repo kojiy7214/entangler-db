@@ -1,4 +1,8 @@
 export let AttributeType = class {
+  static instantiate(value) {
+    throw new Error('unsupported operation.')
+  }
+
   static validate(val) {
     throw new Error('unsupported operation.')
   }

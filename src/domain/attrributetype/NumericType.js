@@ -1,40 +1,6 @@
 import AttributeType from '../datamodel/AttributeType'
 
 export let NumericType = class extends AttributeType {
-  constructor(val) {
-    NumericType.validate(val)
-    this.val = val
-  }
-
-  equal(numericType) {
-    return NumericType.equal(this.val, numericType.val)
-  }
-
-  add(numericType) {
-    this.val = NumericType.add(this.val, numericType.val)
-    return this
-  }
-
-  substract(numericType) {
-    this.val = NumericType.add(this.val, numericType.val)
-    return this
-  }
-
-  multiply(numericType) {
-    this.val = NumericType.multiply(this.val, numericType.val)
-    return this
-  }
-
-  devide(numericType) {
-    this.val = NumericType.devide(this.val, numericType.val)
-    return this
-  }
-
-  mod(numericType) {
-    this.val = NumericType.mod(this.val, numericType.val)
-    return this
-  }
-
   static validate(val) {
     return typeof val == 'number'
   }

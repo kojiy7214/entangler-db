@@ -1,32 +1,10 @@
 import AttributeType from '../datamodel/AttributeType'
 
 export let TimestampType = class extends AttributeType {
-  constructor(val) {
-    TimestampType.validate(val)
-    this.val = val
-  }
-
-  equal(timestampType) {
-    return TimestampType.equal(this.val, timestampType.val)
-  }
-
-  add(timestampType) {
-    this.val = TimestampType.add(this.val, timestampType.val)
-    return this
-  }
-
-  substract(timestampType) {
-    this.val = TimestampType.add(this.val, timestampType.val)
-    return this
-  }
-
-  mod(timestampType) {
-    this.val = TimestampType.mod(this.val, timestampType.val)
-    return this
-  }
+  static instantiate(val) {}
 
   static validate(val) {
-    return typeof val == 'string'
+    return typeof val == 'number' && Number.isInteger(val)
   }
 
   static equal(v1, v2) {
@@ -50,33 +28,31 @@ export let TimestampType = class extends AttributeType {
       throw new Error('Opeland(s) is not TimestampType.')
     }
 
-    return v1.replace(new Regexp('(.*)' + v2 + '(.*?)$', '$1$2'))
+    return v1 - v2
   }
 
   static multiply(v1, v2) {
-    if (!TimestampType.validate(v1) || !NumericType.validate(v2)) {
-      throw new Error(
-        'Opeland(s) is not a set of TimestampType and NumericType.'
-      )
-    }
-
-    return v1.repeat(v2)
-  }
-
-  static devide(v1, v2) {
-    if (!TimestampType.validate(v1) || !TimestampType.TimestampType(v2)) {
+    if (!TimestampType.validate(v1) || !TimestampType.validate(v2)) {
       throw new Error('Opeland(s) is not TimestampType.')
     }
 
-    return String((Sv1.match(v2) || []).length)
+    return v1 * v2
+  }
+
+  static devide(v1, v2) {
+    if (!TimestampType.validate(v1) || !TimestampType.validate(v2)) {
+      throw new Error('Opeland(s) is not TimestampType.')
+    }
+
+    return v1 / v2
   }
 
   static mod(v1, v2) {
     if (!TimestampType.validate(v1) || !TimestampType.validate(v2)) {
-      throw new Error('Opeland(s) is not NumericType.')
+      throw new Error('Opeland(s) is not TimestampType.')
     }
 
-    return v1.replceAll(v2, '')
+    return v1 % v2
   }
 
   static size(val) {
@@ -84,7 +60,12 @@ export let TimestampType = class extends AttributeType {
       throw new Error('Opeland(s) is not TimestampType.')
     }
 
-    return val.length
+    let [int_part, dec_part] = String(Math.abs(val)).split('.')
+
+    int_length = !int_part || int_part == '0' ? 0 : int_part.length
+    dec_length = !dec_part ? 0 : dec_part.length
+
+    return Number(int_length + '.' + dec_length)
   }
 }
 
