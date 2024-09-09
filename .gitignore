@@ -61,7 +61,7 @@ typings/
 .next
 
 # documentation
-doc
+##doc
 
 #data
-data
+#data
