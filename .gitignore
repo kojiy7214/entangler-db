@@ -65,3 +65,7 @@ typings/
 
 #data
 #data
+
+#etc
+.DS_Store
+package-lock.json
