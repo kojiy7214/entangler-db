@@ -31,5 +31,14 @@
   },
   "dependencies": {
     "express": "^4.19.2"
+  },
+  "cspell": {
+    "version": "0.2",
+    "ignorePaths": [],
+    "dictionaryDefinitions": [],
+    "dictionaries": [],
+    "words": [],
+    "ignoreWords": [],
+    "import": []
   }
 }
